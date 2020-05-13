@@ -2,14 +2,15 @@
 
 <html lang="fr">
   <head>
+
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">      
       <link href="https://fonts.googleapis.com/css2?family=Bellota+Text:wght@700&display=swap" rel="stylesheet">    
-      <title> MDS1 Sequencer Test</title>
+      <title> TS1 tool try </title>
 
-    <script type="text/javascript" defer>
-
-      let StepState=      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; 
+      <script type="text/javascript" defer>
+        
+        let StepState=      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; 
    
       function handleClick(source) {
        
@@ -21,9 +22,7 @@
         } else if (IDStep.innerHTML=="1"){          
             StepState[StepNumber]="0";
         }    
-        IDStep.innerHTML=StepState[StepNumber];
-      // alert((StepNumber-1) + ' de type '+ typeof(StepNumber)  );
-
+        IDStep.innerHTML=StepState[StepNumber];      
       }
     
      function resetSteps(){
@@ -48,97 +47,218 @@
           IDinputs="trig";
         }  
      }
-    </script>
 
-  <style> 
-     *{
-        font-family: 'Bellota Text', cursive;       
-        margin  :   0;
-        padding :   0;      
-      }
-      
-      .main{
-     	position : absolute;
-        top : 50%;
-        left: 50%;
-         transform : translateX(-50%) translateY(-50%);            
-      }
 
-      .BackGround{
+        if (!('requestMIDIAccess' in navigator)) {
+            DisplayText('content-body-wrapper').innerHTML = '<h3>Essayez un autre navigateur compatible Web MIDI API</h3>';
+        } else {
+            navigator.requestMIDIAccess().then(midi => {
+            refresh(midi);
+            midi.onstatechange = e => refresh(e.target);
+            });
+        }
+
+
+
+        var OUTPUT;
+        var INPUT;
+
+        //---------------------------------------------------------------
+        // fonction GetTheID
+        // retourne l'ID de l'élément HTML 
+        //---------------------------------------------------------------
+        function GetTheID(Id){
+            return document.getElementById(Id);
+        }
+
+        //---------------------------------------------------------------
+        // fonction principale : refresh(midi) 
+        //---------------------------------------------------------------
+        function refresh(midi) {
+  
+            //---------------------------------------------------------------
+            // si midi.inputs.size est vrai Input prends midi.inputs.values().next().value sinon rien 
+            // idem pour Output
+            INPUT  = midi.inputs.size  ? midi.inputs.values().next().value  : void(0);
+            OUTPUT = midi.outputs.size ? midi.outputs.values().next().value : void(0);
+
+            
+            // si OUTPUT existe on retourne l'objet OUTPUT.name sinon la chaine 'Aucun' 
+            // idem pour INPUT
+            GetTheID('MidiDevice').innerHTML = [    'Midi out : ' + ( OUTPUT ? OUTPUT.name : 'Aucun'),
+                                                '<br>Midi in  : ' + ( INPUT  ? INPUT.name  : 'Aucun'), ].join('');
+        }
+
+      </script>
+
+
+      <style type="text/css">
+        body{
          background: linear-gradient(to right,#e91e63,#3f51b5);
-         height: 100%; 
-      }
+         height: 90%;   
+         font-family: 'Bellota Text', cursive;       
+        margin  :   0;
+        padding :   0;    
+        }
 
-     input[id^="t"]{
-         display: none;      
-      }
+       .container1 {
+            background-color: #221217; 
+            font-size: 18;           
+            padding-top: 10px;
+            padding-bottom: 10px;
+            color: antiquewhite;
+            text-align: center;    
+            margin-left: auto;
+            margin-right: auto;
+            width: 900; /* largeur obligatoire pour être centré */           
+        }
+        .container2 {        
+            min-height: 30px;
+            padding-top: 15px;            
+            padding-bottom: 15px;
+            color: antiquewhite;          
+            margin-left: auto;
+            margin-right: auto;
+            width: 900; /* largeur obligatoire pour être centré */              
+            background-color: #5a3d3d;
+        }
+
+        #peripherique {
+            float:left;
+            margin-left: 150px;           
+        }
+
+        #MidiDevice   {
+            float:right;
+            margin-right: 150px;
+        }
+
+        #DrumSequence {          
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            padding-top: 1px;
+            padding-bottom: 1px;
+            width: 900; /* largeur obligatoire pour être centré */
+            background-color: #ee2929;
+        }
+       
+        #controlSequence {
+            display: flex;
+            flex-wrap: wrap;         /* Optionner - permet aux éléments de passer à la ligne en cas de besoin */       
+            justify-content: center; /* Permet de centrer dans l'axe principal */   
+            min-height: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 900; /* largeur obligatoire pour être centré */
+            background: linear-gradient(to right,#e91e63,#3f51b5);          
+        }
+
+        #ResetButton, #SendButton, #ReceiveButton {                   
+            background-color: #5a3d3d;         
+            padding-left : 105px;
+            padding-right : 105px;
+            margin-left: auto;
+            margin-right: auto;            
+            border: none;
+            color: antiquewhite;
+       }
+
+        .DrumSequencer{     	   
+            padding-top: 90px;
+            display: flex;
+            flex-wrap: wrap;         /* Optionner - permet aux éléments de passer à la ligne en cas de besoin */       
+            justify-content: center; /* Permet de centrer dans l'axe principal */   
+            margin-left: auto;
+            margin-right: auto;         
+            width: 900; /* largeur obligatoire pour être centré */        
+            background: linear-gradient(to left,#e91e63,#3f51b5);            
+        }
+
+        .StepState{     	   
+            padding-top: 10px;
+            display: flex;
+            flex-wrap: wrap;         /* Optionner - permet aux éléments de passer à la ligne en cas de besoin */       
+            justify-content: center; /* Permet de centrer dans l'axe principal */   
+            margin-left: auto;
+            margin-right: auto;
+            min-height: 80px;
+            width: 900; /* largeur obligatoire pour être centré */
+            background: linear-gradient(to left,#e91e63,#3f51b5);            
+        }
+
+
+        input[id^="t"]{
+            display: none;      
+        }
     
-      .checker {
-        background-image: url(StepOff.png);
-        background-size: 60px 60px;
-        display: inline-block;
-        margin-left: 2px;
-        width: 60px;
-        height: 60px;      
-      }
+        .checker {
+            background-image: url(StepOff.png);
+            background-size: 60px 60px;
+            display: inline-block;
+            margin-left: 2px;
+            width: 60px;
+            height: 60px;      
+        }
 
-      input[id^="t"]:checked+.checker {     
-        background-image: url(StepOn.png);   
-      }
+        input[id^="t"]:checked+.checker {     
+            background-image: url(StepOn.png);   
+        }
 
-      div[id^="S"]{
-        display: inline-block;
-        margin-left: 12px;
-        width: 50px;        
-      }
+        div[id^="S"]{
+            display: inline-block;
+            text-align: center;
+            margin-left: 6;
+            margin-right: 6;
+            width: 50px;        
+        }
 
-      #Title {
-        background-color: #221217; 
-        font-size: 32;
-        color: antiquewhite;
-        text-align: center;
-        padding-top: 20px;
-        padding-bottom: 40px;
-      }
+        #NoteSequence {          
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            padding-top: 1px;
+            padding-bottom: 1px;
+            width: 900; /* largeur obligatoire pour être centré */
+            background-color: #ee2929;
+        }
 
-      #controlSequence {
-        background: linear-gradient(to left,#e91e63,#3f51b5);         
-        display: flex;
-        flex-wrap: wrap;         /* Optionner - permet aux éléments de passer à la ligne en cas de besoin */
-        height: 40;
-        justify-content: center; /* Permet de centrer dans l'axe principal */        
-      }
-
-      #ResetButton, #SendButton, #ReceiveButton {              
-        background-color: #5e3341;
-        padding-left: 20;
-        padding-right: 20;
-        border: none;
-        color: antiquewhite;
-      }
-
-  </style> 
+        .container5{
+            min-height: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 900; /* largeur obligatoire pour être centré */
+            background: linear-gradient(to left,#e91e63,#3f51b5);
+        }
+    </style>
 
   </head>
 
-  <body>
-    <div id="Title">
-        <h1>  Midi Tool for TS1</h1>
-        <br>
-        <h5>  Realease 0.1 </h5>
-        <h5>  Coded by Bvr-Instruments 2020. </h5>
+  </body>
+    <div class=container1 >
+        <h1>  TriggerSequencer TS1 Tool</h1>
+      
+        <h6>  Release 0.1 </h6>
+        <h5>  Coded by Bvr-Instruments @2020. </h5>
+
+    </div>
+    <div class=container2 >                 
+         <span id="peripherique">Périphérique midi détecté :</span>
+         <span id="MidiDevice"></span>    
     </div>
 
-    <div id="controlSequence">
 
-      <button id ="ResetButton" onclick="resetSteps();">Reset Sequence</button>
-      <button id ="SendButton" onclick="SendSteps();">Send Sequence</button>
-      <button id ="ReceiveButton" onclick="RecceiveSteps();">Receive Sequence</button>
+    <div id="DrumSequence">
+        <h3>Drum Sequencer</h3>     
     </div>
-    
-  <div class ="BackGround"> </div>
   
-  <div class= "main">
+    <div id="controlSequence">
+        <button id ="ResetButton" onclick="resetSteps();">Reset Sequence</button>
+        <button id ="SendButton" onclick="SendSteps();">Send Sequence</button>
+        <button id ="ReceiveButton" onclick="RecceiveSteps();">Receive Sequence</button>
+    </div>
+
+    <div class= "DrumSequencer">
     
         <input id= "trig1" type="checkbox" onclick="handleClick('STP1');" >
         <label for="trig1" image class="checker"></label>
@@ -156,13 +276,22 @@
         <label for="trig7" image class="checker"></label>  
         <input id= "trig8" type="checkbox" onclick="handleClick('STP8');">
         <label for="trig8" image class="checker"></label>
-   
-    <div>
+    </div> 
+
+    <div class="StepState">
       <div id="STP1">0</div> <div id="STP2">0</div> <div id="STP3">0</div> <div id="STP4">0</div> 
       <div id="STP5">0</div> <div id="STP6">0</div> <div id="STP7">0</div> <div id="STP8">0</div>
     </div>
 
-  </div> 
+    <div id="NoteSequence">
+        <h3>Note Sequencer</h3>     
+    </div>
+
+    <div class=container5 >
+
+
+    </div>
+
 
   </body>  
   
