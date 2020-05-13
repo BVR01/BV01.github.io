@@ -3,7 +3,8 @@
 <html lang="fr">
   <head>
       <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">             
+      <meta name="viewport" content="width=device-width, initial-scale=1">      
+      <link href="https://fonts.googleapis.com/css2?family=Bellota+Text:wght@700&display=swap" rel="stylesheet">    
       <title> MDS1 Sequencer Test</title>
 
     <script type="text/javascript" defer>
@@ -51,6 +52,7 @@
 
   <style> 
      *{
+        font-family: 'Bellota Text', cursive;       
         margin  :   0;
         padding :   0;      
       }
@@ -92,6 +94,7 @@
 
       #Title {
         background-color: #221217; 
+        font-size: 32;
         color: antiquewhite;
         text-align: center;
         padding-top: 20px;
@@ -99,13 +102,11 @@
       }
 
       #controlSequence {
-        background: linear-gradient(to left,#e91e63,#3f51b5);
-       /* background-color: #e91e63;  */   
+        background: linear-gradient(to left,#e91e63,#3f51b5);         
         display: flex;
-        flex-wrap: wrap;          /*Optionner - permet aux éléments de passer à la ligne en cas de besoin*/
+        flex-wrap: wrap;         /* Optionner - permet aux éléments de passer à la ligne en cas de besoin */
         height: 40;
-        justify-content: center; /*Permet de centrer dans l'axe principal*/
-        
+        justify-content: center; /* Permet de centrer dans l'axe principal */        
       }
 
       #ResetButton, #SendButton, #ReceiveButton {              
@@ -115,6 +116,7 @@
         border: none;
         color: antiquewhite;
       }
+
   </style> 
 
   </head>
@@ -124,8 +126,7 @@
         <h1>  Midi Tool for TS1</h1>
         <br>
         <h5>  Realease 0.1 </h5>
-        <h5>  Coded by Bvr-Instruments 2020.</h5>
-
+        <h5>  Coded by Bvr-Instruments 2020. </h5>
     </div>
 
     <div id="controlSequence">
