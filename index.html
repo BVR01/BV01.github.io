@@ -1,17 +1,7 @@
 
+
 <html lang="fr">
   <head>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-165335625-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-165335625-1');
-  </script>
-
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">             
       <title> MDS1 Sequencer Test</title>
@@ -69,7 +59,7 @@
      	position : absolute;
         top : 50%;
         left: 50%;
-         transform : translateX(-60%) translateY(-60%);            
+         transform : translateX(-50%) translateY(-50%);            
       }
 
       .BackGround{
@@ -82,7 +72,7 @@
       }
     
       .checker {
-        background-image: url(StepOff.png);
+        background-image: url(images/StepOff.png);
         background-size: 60px 60px;
         display: inline-block;
         margin-left: 2px;
@@ -91,7 +81,7 @@
       }
 
       input[id^="t"]:checked+.checker {     
-        background-image: url(StepOn.png);   
+        background-image: url(images/StepOn.png);   
       }
 
       div[id^="S"]{
@@ -100,16 +90,28 @@
         width: 50px;        
       }
 
-      #controlSequence, #ReseButton{
-        background-color: #e91e63;     
+      #Title {
+        background-color: #221217; 
+        color: antiquewhite;
+        text-align: center;
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      #controlSequence {
+        background: linear-gradient(to left,#e91e63,#3f51b5);
+       /* background-color: #e91e63;  */   
         display: flex;
-       flex-wrap: wrap;          /*Optionner - permet aux éléments de passer à la ligne en cas de besoin*/
+        flex-wrap: wrap;          /*Optionner - permet aux éléments de passer à la ligne en cas de besoin*/
+        height: 40;
         justify-content: center; /*Permet de centrer dans l'axe principal*/
         
       }
 
-      #ResetButton{              
-        background-color: #8b4a60;
+      #ResetButton, #SendButton, #ReceiveButton {              
+        background-color: #5e3341;
+        padding-left: 20;
+        padding-right: 20;
         border: none;
         color: antiquewhite;
       }
@@ -118,8 +120,19 @@
   </head>
 
   <body>
+    <div id="Title">
+        <h1>  Midi Tool for TS1</h1>
+        <br>
+        <h5>  Realease 0.1 </h5>
+        <h5>  Coded by Bvr-Instruments 2020.</h5>
+
+    </div>
+
     <div id="controlSequence">
+
       <button id ="ResetButton" onclick="resetSteps();">Reset Sequence</button>
+      <button id ="SendButton" onclick="SendSteps();">Send Sequence</button>
+      <button id ="ReceiveButton" onclick="RecceiveSteps();">Receive Sequence</button>
     </div>
     
   <div class ="BackGround"> </div>
